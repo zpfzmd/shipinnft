@@ -158,7 +158,7 @@ window.ARThreeOnLoad = function() {
 
 				requestAnimationFrame( animate );
 
-				render();
+				arScene.renderOn(renderer);
 				stats.update();
 
 			}
@@ -224,7 +224,7 @@ window.ARThreeOnLoad = function() {
 
 			}
 			var clock = new THREE.Clock();
-			var  render= function() {
+			var  renderer= function() {
 
 				var timer = Date.now() * 0.0005;
 
