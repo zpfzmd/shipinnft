@@ -30,6 +30,8 @@ html,body {
 
 <script  src="vendor/three.js/build/three.js"></script>
 <script  src="vendor/three.js/Animation.js"></script>
+<script  src="vendor/three.js/FBXLoader.js"></script>
+<script  src="vendor/three.js/inflate.min.js"></script>
 <script  src="vendor/three.js/KeyFrameAnimation.js"></script>
 <script  src="vendor/three.js/AnimationHandler.js"></script>
 <script  src="vendor/three.js/ColladaLoader.js"></script>
@@ -107,9 +109,8 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-	var loader = new THREE.ColladaLoader();
-			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/monster.dae', function (collada) {
+	var loader = new THREE.FBXLoader();
+			loader.load(location_path+ '../three.js/examples/models/fbx/aaa.fbx', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
