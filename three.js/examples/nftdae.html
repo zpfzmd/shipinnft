@@ -142,7 +142,7 @@ window.ARThreeOnLoad = function() {
 				arScene.scene.add(markerRoot);	
 			});
 		});
-
+	var clock = new THREE.Clock();
 		var tick = function() {
 			arScene.process();
 
@@ -151,7 +151,7 @@ window.ARThreeOnLoad = function() {
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
-
+            THREE.AnimationHandler.update( clock.getDelta() );
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
@@ -215,7 +215,7 @@ window.ARThreeOnLoad = function() {
 				particleLight.add( pointLight );
 
 			}
-			var clock = new THREE.Clock();
+		
 			<!-- var  renderer= function() { -->
 
 				<!-- var timer = Date.now() * 0.0005; -->
