@@ -110,7 +110,7 @@ window.ARThreeOnLoad = function() {
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.FBXLoader();
-			loader.load(location_path+ '../three.js/examples/models/fbx/aaa.fbx', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
