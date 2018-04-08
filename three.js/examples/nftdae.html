@@ -137,6 +137,7 @@ window.ARThreeOnLoad = function() {
 				dae.updateMatrix();
 				init();
 				tick();
+				animate();
 				markerRoot.add( dae );
 				arScene.scene.add(markerRoot);	
 			});
@@ -153,7 +154,14 @@ window.ARThreeOnLoad = function() {
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
+	    var animate= function() {
 
+				requestAnimationFrame( animate );
+
+				arScene.renderOn(renderer);
+				stats.update();
+
+			}
 		var init= function() {
 
 				container = document.createElement( 'div' );
