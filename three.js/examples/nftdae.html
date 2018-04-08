@@ -112,12 +112,12 @@ window.ARThreeOnLoad = function() {
 	var loader = new THREE.FBXLoader();
 			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
 				dae = collada.scene;
-				dae.traverse( function (child) {
-					if (child instanceof THREE.SkinnedMesh) {
-						var animation = new THREE.Animation( child, child.geometry.animation );
-						animation.play();
-					}
-				});
+				<!-- dae.traverse( function (child) { -->
+					<!-- if (child instanceof THREE.SkinnedMesh) { -->
+						<!-- var animation = new THREE.Animation( child, child.geometry.animation ); -->
+						<!-- animation.play(); -->
+					<!-- } -->
+				<!-- }); -->
 				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
 				//dae.position.z = 0;
 				<!-- dae.position.z = 40; -->
