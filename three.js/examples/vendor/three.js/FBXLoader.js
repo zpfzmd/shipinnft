@@ -2464,7 +2464,7 @@
 
 		this.id = node.id;
 		this.name = node.attrName;
-		this.fileName = this.parseFileName( node.properties.fileName );
+		this.fileName = this.parseFileName(  );
 
 		this.parentIds = this.searchParents( this.id, nodes );
 
