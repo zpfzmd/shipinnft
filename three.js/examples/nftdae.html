@@ -25,20 +25,16 @@ html,body {
 </head>
 <body>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/build/artoolkit.min.js"></script>
-<script src="worker_artoolkit2/vendor/jsartoolkit5/build/artoolkit.debug.js"></script> 
- <script src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.api.js"></script> 
+<!-- <script src="worker_artoolkit2/vendor/jsartoolkit5/build/artoolkit.debug.js"></script> --> 
+<!--  <script src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.api.js"></script>  -->
 
 <script  src="vendor/three.js/build/three.js"></script>
 <script  src="vendor/three.js/Animation.js"></script>
-<script  src="vendor/three.js/FBXLoader.js"></script>
-<script  src="vendor/three.js/inflate.min.js"></script>
 <script  src="vendor/three.js/KeyFrameAnimation.js"></script>
 <script  src="vendor/three.js/AnimationHandler.js"></script>
 <script  src="vendor/three.js/ColladaLoader.js"></script>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.three.js"></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
-
-
 
 <script src="js/shaders/ConvolutionShader.js"></script>
 <script src="js/shaders/CopyShader.js"></script>
@@ -111,16 +107,17 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-	var loader = new THREE.FBXLoader();
-			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
+	var loader = new THREE.ColladaLoader();
+			loader.options.convertUpAxis = true;
+			loader.load(location_path+ '../three.js/examples/models/dae/monster.dae', function (collada) {
 				dae = collada.scene;
-				<!-- dae.traverse( function (child) { -->
-					<!-- if (child instanceof THREE.SkinnedMesh) { -->
-						<!-- var animation = new THREE.Animation( child, child.geometry.animation ); -->
-						<!-- animation.play(); -->
-					<!-- } -->
-				<!-- }); -->
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
+				dae.traverse( function (child) {
+					if (child instanceof THREE.SkinnedMesh) {
+						var animation = new THREE.Animation( child, child.geometry.animation );
+						animation.play();
+					}
+				});
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.5
 				//dae.position.z = 0;
 				<!-- dae.position.z = 40; -->
 				<!-- dae.position.x = 80; -->
