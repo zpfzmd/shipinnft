@@ -29,12 +29,8 @@ html,body {
 <!--  <script src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.api.js"></script>  -->
 
 <script  src="vendor/three.js/build/three.js"></script>
-<script  src="vendor/three.js/Animation.js"></script>
 <script  src="vendor/three.js/FBXLoader.js"></script>
 <script  src="vendor/three.js/inflate.min.js"></script>
-<script  src="vendor/three.js/KeyFrameAnimation.js"></script>
-<script  src="vendor/three.js/AnimationHandler.js"></script>
-<script  src="vendor/three.js/ColladaLoader.js"></script>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.three.js"></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
 
@@ -47,9 +43,7 @@ html,body {
 <script src="js/postprocessing/ShaderPass.js"></script>
 <script src="js/Detector.js"></script>
 
-<video id="video" webkit-playsinline loop style="display: none;">
-	<source src="js/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-</video>
+
 
 
 <script>
@@ -120,8 +114,8 @@ window.ARThreeOnLoad = function() {
 	var loader = new THREE.FBXLoader( );
 
 			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
-				
-					collada.traverse( function( child ) {
+				dae = collada.scene;
+					dae.traverse( function( child ) {
 
 						if ( child instanceof THREE.Mesh ) {
 
@@ -144,14 +138,14 @@ window.ARThreeOnLoad = function() {
 						}
 
 					} );
-				collada.scale.x = collada.scale.y = collada.scale.z = 0.05
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
 
-				collada.rotation.set( 0,Math.PI/2,Math.PI/2);
-				collada.updateMatrix();
+				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
+				dae.updateMatrix();
 				init();
 				//animate();
 				tick();
-				markerRoot.add( collada);
+				markerRoot.add( dae );
 				arScene.scene.add(markerRoot);	
 			});
 		});
@@ -164,7 +158,6 @@ window.ARThreeOnLoad = function() {
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
-
 			if ( mixers.length > 0 ) {
 
 					for ( var i = 0; i < mixers.length; i ++ ) {
