@@ -125,15 +125,15 @@ window.ARThreeOnLoad = function() {
 
 						if ( child instanceof THREE.SkinnedMesh ) {
 
-							if ( child.geometry.animations !== undefined || child.geometry.morphAnimations !== undefined ) {
+							<!-- if ( child.geometry.animations !== undefined || child.geometry.morphAnimations !== undefined ) { -->
 
-								child.mixer = new THREE.AnimationMixer( child );
-								mixers.push( child.mixer );
-                                var action = child.mixer.clipAction( child.geometry.animations[ 0 ] );
-								action.play();
+								<!-- child.mixer = new THREE.AnimationMixer( child ); -->
+								<!-- mixers.push( child.mixer ); -->
+                                <!-- var action = child.mixer.clipAction( child.geometry.animations[ 0 ] ); -->
+								<!-- action.play(); -->
 								
 
-							}
+							<!-- } -->
 
 						}
 
