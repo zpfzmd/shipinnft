@@ -113,7 +113,7 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.FBXLoader( );
 
-			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man.fbx', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man_skinning.fbx', function (collada) {
 				
 					collada.traverse( function( child ) {
 
@@ -129,7 +129,8 @@ window.ARThreeOnLoad = function() {
 
 								child.mixer = new THREE.AnimationMixer( child );
 								mixers.push( child.mixer );
-
+                                var action = child.mixer.clipAction( child.geometry.animations[ 0 ] );
+								action.play();
 								
 
 							}
