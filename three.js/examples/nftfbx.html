@@ -30,6 +30,8 @@ html,body {
 
 <script  src="vendor/three.js/build/three.js"></script>
 <script  src="vendor/three.js/Animation.js"></script>
+<script  src="vendor/three.js/FBXLoader.js"></script>
+<script  src="vendor/three.js/inflate.min.js"></script>
 <script  src="vendor/three.js/KeyFrameAnimation.js"></script>
 <script  src="vendor/three.js/AnimationHandler.js"></script>
 <script  src="vendor/three.js/ColladaLoader.js"></script>
@@ -80,6 +82,7 @@ window.ARThreeOnLoad = function() {
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
+		var mixers = [];
 		let video = document.getElementById( 'video' );
 
 		renderer.domElement.addEventListener('click', function(ev) {
@@ -96,7 +99,14 @@ window.ARThreeOnLoad = function() {
 		sphere.position.x = 80;
 		sphere.position.y = 80;
 		sphere.scale.set(80,80,80);
-
+ 
+        var light = new THREE.PointLight(0xffffff);
+		light.position.set(400, 400, 400);
+		arScene.scene.add(light);
+		var light = new THREE.PointLight(0xff8800);
+		light.position.set(-400, -200, -300);
+		arScene.scene.add(light);
+		
 		var torus = new THREE.Mesh(
 			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
 			new THREE.MeshNormalMaterial()
@@ -107,56 +117,95 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-	var loader = new THREE.ColladaLoader();
-			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/monster.dae', function (collada) {
+	var loader = new THREE.FBXLoader( );
+
+			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
 				dae = collada.scene;
-				dae.traverse( function (child) {
-					if (child instanceof THREE.SkinnedMesh) {
-						var animation = new THREE.Animation( child, child.geometry.animation );
-						animation.play();
-					}
-				});
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.5
-				//dae.position.z = 0;
-				<!-- dae.position.z = 40; -->
-				<!-- dae.position.x = 80; -->
-				<!-- dae.position.y = 80; -->
-				//dae.rotation.x = Math.PI/2;
+					dae.traverse( function( child ) {
 
+						if ( child instanceof THREE.Mesh ) {
 
-				
+							// pass
+
+						}
+
+						if ( child instanceof THREE.SkinnedMesh ) {
+
+							if ( child.geometry.animations !== undefined || child.geometry.morphAnimations !== undefined ) {
+
+								child.mixer = new THREE.AnimationMixer( child );
+								mixers.push( child.mixer );
+
+								var action = child.mixer.clipAction( child.geometry.animations[ 0 ] );
+								action.play();
+
+							}
+
+						}
+
+					} );
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
+
 				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
 				dae.updateMatrix();
+				init();
+				//animate();
+				tick();
 				markerRoot.add( dae );
-				
 				arScene.scene.add(markerRoot);	
 			});
 		});
-		
-		
-		
-		setInterval(function(){
-	    	if(Date.now()-playingtime>1200){
-	    		video.pause();
-	    		video.style.display="none";
-	    		bisplay=false;	
-	    	}
-	    },1000);
+	var clock = new THREE.Clock();
 		var tick = function() {
 			arScene.process();
 
+				
 			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
 
+			if ( mixers.length > 0 ) {
+
+					for ( var i = 0; i < mixers.length; i ++ ) {
+
+						mixers[ i ].update( clock.getDelta() );
+
+					}
+
+				}
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
 
-		tick();
+		var init= function() {
 
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera.position.set( 2, 2, 3 );
+
+
+				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				arScene.scene.add( particleLight );
+
+				// Lights
+
+				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
+				directionalLight.position.x = Math.random() - 0.5;
+				directionalLight.position.y = Math.random() - 0.5;
+				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.normalize();
+				arScene.scene.add( directionalLight );
+
+				var pointLight = new THREE.PointLight( 0xffffff, 4 );
+				particleLight.add( pointLight );
+
+			}
+		
 	}});
 
 	delete window.ARThreeOnLoad;
