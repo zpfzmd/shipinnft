@@ -96,7 +96,14 @@ window.ARThreeOnLoad = function() {
 		sphere.position.x = 80;
 		sphere.position.y = 80;
 		sphere.scale.set(80,80,80);
-
+ 
+        var light = new THREE.PointLight(0xffffff);
+		light.position.set(400, 400, 400);
+		arScene.scene.add(light);
+		var light = new THREE.PointLight(0xff8800);
+		light.position.set(-400, -200, -300);
+		arScene.scene.add(light);
+		
 		var torus = new THREE.Mesh(
 			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
 			new THREE.MeshNormalMaterial()
