@@ -240,7 +240,7 @@ window.ARThreeOnLoad = function() {
 
 				THREE.AnimationHandler.update( clock.getDelta() );
 
-				renderer.render( arScene.scene, camera );
+				arScene.renderOn( arScene.scene, camera );
 
 			}
 
