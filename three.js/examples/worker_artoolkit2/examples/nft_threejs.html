@@ -42,11 +42,11 @@ html,body {
 <script src="../../vendor/three.js/STLLoader.js"></script>
 
 <script>
-let location_path='https://'+location.host+'/AR.js-master/';
+let location_path='../';
 //alert(navigator.getUserMedia);
 window.ARThreeOnLoad = function() {
 
-	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: location_path+'data/data/camera_para.dat', 
+	ARController.getUserMediaThreeScene({maxARVideoSize: 320, cameraParam: location_path+'../data/data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
 		console.log('onSuccess');
 		document.body.className = arController.orientation;
@@ -99,11 +99,11 @@ window.ARThreeOnLoad = function() {
 		torus.scale.set(80,80,80);
 		let dae=null;
 
-		arController.loadNFTMarker(location_path+'data/dataNFT/mc/mc', function(markerId) {
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/mc', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-		/*	var loader = new THREE.ColladaLoader();
+			var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+'three.js/examples/models/dae/monster.dae', function (collada) {
+			loader.load(location_path+'../three.js/examples/models/dae/monster.dae', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function ( child ) {
 					if (child instanceof THREE.SkinnedMesh ) {
@@ -111,12 +111,10 @@ window.ARThreeOnLoad = function() {
 						animation.play();
 					}
 				});
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.001;
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.05;
 				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
 				//dae.scale.set( 1, 1, 1 );
-				dae.position.z = 1140;
-				dae.position.x = 1180;
-				dae.position.y = 1180;
+			
 				//dae.scale.set(80,80,80);
 				markerRoot.add(dae);
 				// onRenderFcts.push(function(delta){
@@ -126,33 +124,10 @@ window.ARThreeOnLoad = function() {
 				
 				dae.updateMatrix();
 				arScene.scene.add(markerRoot);
-			});*/
+			});
 			
 
-			var loader = new THREE.STLLoader();
-			loader.load(location_path+'three.js/examples/models/stl/hnb.stl', function ( geometry ) {
-
-				var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
-				var mesh = new THREE.Mesh( geometry, material );
-				console.log(geometry);
-
-				// mesh.position.set( 0, - 0.25, 0.6 );
-				mesh.rotation.set( -Math.PI,0,-Math.PI);
-				mesh.scale.set( 1, 1, 1 );
-				mesh.position.z = 40;
-				mesh.position.x = 85;
-				mesh.position.y = 80;
-				mesh.scale.set(2,2,2);
-
-				// mesh.castShadow = true;
-				// mesh.receiveShadow = true;
-
-				// scene.add( mesh );
-				//markerRoot.add( mesh );
-				console.log(mesh);
-				markerRoot.add(mesh);
-				arScene.scene.add(markerRoot);
-			});
+		
 
 			// markerRoot.add(mesh);
 			// arScene.scene.add(markerRoot);
