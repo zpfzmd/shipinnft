@@ -154,14 +154,14 @@ window.ARThreeOnLoad = function() {
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
-	    var animate= function() {
+	    <!-- var animate= function() { -->
 
-				requestAnimationFrame( animate );
+				<!-- requestAnimationFrame( animate ); -->
 
-				arScene.renderOn(renderer);
-				stats.update();
+				<!-- arScene.renderOn(renderer); -->
+				<!-- stats.update(); -->
 
-			}
+			<!-- } -->
 		var init= function() {
 
 				container = document.createElement( 'div' );
@@ -215,25 +215,25 @@ window.ARThreeOnLoad = function() {
 
 			}
 			var clock = new THREE.Clock();
-			var  renderer= function() {
+			<!-- var  renderer= function() { -->
 
-				var timer = Date.now() * 0.0005;
+				<!-- var timer = Date.now() * 0.0005; -->
 
-				camera.position.x = Math.cos( timer ) * 10;
-				camera.position.y = 2;
-				camera.position.z = Math.sin( timer ) * 10;
+				<!-- camera.position.x = Math.cos( timer ) * 10; -->
+				<!-- camera.position.y = 2; -->
+				<!-- camera.position.z = Math.sin( timer ) * 10; -->
 
-				camera.lookAt( arScene.scene.position );
+				<!-- camera.lookAt( arScene.scene.position ); -->
 
-				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
-				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
-				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+				<!-- particleLight.position.x = Math.sin( timer * 4 ) * 3009; -->
+				<!-- particleLight.position.y = Math.cos( timer * 5 ) * 4000; -->
+				<!-- particleLight.position.z = Math.cos( timer * 4 ) * 3009; -->
 
-				THREE.AnimationHandler.update( clock.getDelta() );
+				<!-- THREE.AnimationHandler.update( clock.getDelta() ); -->
 
 				
 
-			}
+			<!-- } -->
 
 	}});
 
