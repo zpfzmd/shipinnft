@@ -103,8 +103,7 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-		});
-		arController.addEventListener('getNFTMarker', function (ev) {
+			arController.addEventListener('getNFTMarker', function (ev) {
 		       if(bisplay===false){
 		       		video.play();
 		       		video.style.display="inline";
@@ -112,6 +111,8 @@ window.ARThreeOnLoad = function() {
 		       }
 		       playingtime=Date.now();
 	    });
+		});
+		
 		
 		
 		setInterval(function(){
