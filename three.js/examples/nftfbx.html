@@ -155,15 +155,15 @@ window.ARThreeOnLoad = function() {
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
-			if ( mixers.length > 0 ) {
+			<!-- if ( mixers.length > 0 ) { -->
 
-					for ( var i = 0; i < mixers.length; i ++ ) {
+					<!-- for ( var i = 0; i < mixers.length; i ++ ) { -->
 
-						mixers[ i ].update( clock.getDelta() );
+						<!-- mixers[ i ].update( clock.getDelta() ); -->
 
-					}
+					<!-- } -->
 
-				}
+				<!-- } -->
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
