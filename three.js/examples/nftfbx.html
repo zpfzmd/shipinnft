@@ -120,8 +120,8 @@ window.ARThreeOnLoad = function() {
 	var loader = new THREE.FBXLoader( );
 
 			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
-				dae = collada.scene;
-					dae.traverse( function( child ) {
+				
+					collada.traverse( function( child ) {
 
 						if ( child instanceof THREE.Mesh ) {
 
@@ -144,14 +144,14 @@ window.ARThreeOnLoad = function() {
 						}
 
 					} );
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
+				collada.scale.x = collada.scale.y = collada.scale.z = 0.05
 
-				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
-				dae.updateMatrix();
+				collada.rotation.set( 0,Math.PI/2,Math.PI/2);
+				collada.updateMatrix();
 				init();
 				//animate();
 				tick();
-				markerRoot.add( dae );
+				markerRoot.add( collada);
 				arScene.scene.add(markerRoot);	
 			});
 		});
