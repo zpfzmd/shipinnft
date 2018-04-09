@@ -116,7 +116,7 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/cube(1).DAE', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/dae/fei/cube-01.DAE', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
