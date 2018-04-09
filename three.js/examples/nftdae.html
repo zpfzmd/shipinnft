@@ -116,7 +116,7 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/monster.dae', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/dae/avatar.dae', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
@@ -150,30 +150,15 @@ window.ARThreeOnLoad = function() {
 		};
 
 		var init= function() {
+	            container = document.getElementById( 'container' );
 
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
+				camera = new THREE.PerspectiveCamera( 25, window.innerWidth / window.innerHeight, 1, 10000 );
+				camera.position.set( -5, -5, 5 );
+				camera.up.set( 0, 0, 1 );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.set( 2, 2, 3 );
-
-
-				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
-				arScene.scene.add( particleLight );
-
-				// Lights
-
-				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
-
-				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
-				directionalLight.position.x = Math.random() - 0.5;
-				directionalLight.position.y = Math.random() - 0.5;
-				directionalLight.position.z = Math.random() - 0.5;
-				directionalLight.position.normalize();
-				arScene.scene.add( directionalLight );
-
-				var pointLight = new THREE.PointLight( 0xffffff, 4 );
-				particleLight.add( pointLight );
+				var light = new THREE.DirectionalLight( 0xffffff, 1.5 );
+				light.position.set( 0, -4, -4 ).normalize();
+				arScene.scene.add( light );
 
 			}
 		
