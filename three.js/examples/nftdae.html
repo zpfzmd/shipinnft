@@ -116,7 +116,7 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-			loader.load(location_path+ '../three.js/examples/models/dae/avatar.dae', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/dae/cube(1).DAE', function (collada) {
 				dae = collada.scene;
 				dae.traverse( function (child) {
 					if (child instanceof THREE.SkinnedMesh) {
@@ -124,7 +124,7 @@ window.ARThreeOnLoad = function() {
 						animation.play();
 					}
 				});
-				dae.scale.x = dae.scale.y = dae.scale.z = 5
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.05
 
 				dae.rotation.set( 0,Math.PI/2,Math.PI/2);
 				dae.updateMatrix();
