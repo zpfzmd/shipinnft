@@ -94,7 +94,7 @@ var manager = new THREE.LoadingManager();
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 	var loader = new THREE.FBXLoader(manager);
 
-			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man.fbx', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man_skinning.fbx', function (collada) {
 				
 					collada.traverse( function( child ) {
 
