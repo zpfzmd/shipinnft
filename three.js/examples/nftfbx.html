@@ -127,6 +127,21 @@ var manager = new THREE.LoadingManager();
 		});
 		var init = function() {
 		renderer = new THREE.WebGLRenderer();
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+
+
+
+				// grid
+				var gridHelper = new THREE.GridHelper( 14, 28, 0x303030, 0x303030 );
+				gridHelper.position.set( 0, - 0.04, 0 );
+				arScene.scene.add( gridHelper );
+
+				// stats
+				stats = new Stats();
+				container.appendChild( stats.dom );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.setClearColor( 0x000000 );
