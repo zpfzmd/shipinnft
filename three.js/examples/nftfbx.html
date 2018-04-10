@@ -103,7 +103,7 @@ var manager = new THREE.LoadingManager();
 						}
 
 					} );
-
+                collada.scale.x = collada.scale.y = collada.scale.z =5;
                 tick();
 				markerRoot.add( collada );
 				arScene.scene.add(markerRoot);	
