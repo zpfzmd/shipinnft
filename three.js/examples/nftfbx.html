@@ -111,6 +111,19 @@ var manager = new THREE.LoadingManager();
 		});
 	    var clock = new THREE.Clock();
 		var tick = function() {
+		        particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				arScene.scene.add( particleLight );
+				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
+
+				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
+				directionalLight.position.x = Math.random() - 0.5;
+				directionalLight.position.y = Math.random() - 0.5;
+				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.normalize();
+				arScene.scene.add( directionalLight );
+
+				var pointLight = new THREE.PointLight( 0xffffff, 1 );
+				particleLight.add( pointLight );
 		if ( mixers.length > 0 ) {
 
 					for ( var i = 0; i < mixers.length; i ++ ) {
