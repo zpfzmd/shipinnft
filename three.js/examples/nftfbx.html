@@ -28,7 +28,7 @@ let location_path = '../';
 	ARController.getUserMediaThreeScene({cameraParam: location_path+'../data/data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
 		document.body.className = arController.orientation;
-		var renderer = new THREE.WebGLRenderer();
+		var renderer = new THREE.WebGLRenderer({antialias: true});
 		if (arController.orientation === 'portrait') {
 			var w = (window.innerWidth / arController.videoHeight) * arController.videoWidth;
 			var h = window.innerWidth;
@@ -65,7 +65,7 @@ let location_path = '../';
 
 				};
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
-		var markerRoot = arController.createThreeNFTMarker(markerId);
+			var markerRoot = arController.createThreeNFTMarker(markerId);
 	    var loader = new THREE.FBXLoader(manager);
 
 			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man_skinning.fbx', function (collada) {
@@ -94,6 +94,7 @@ let location_path = '../';
 
 					} );
                 collada.scale.x = collada.scale.y = collada.scale.z =5;
+				console.log( collada.position );
 				init();
                 tick();
 				markerRoot.add( collada );
@@ -102,21 +103,21 @@ let location_path = '../';
 		});
 	    var clock = new THREE.Clock();
 		var init = function() {
-		        light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
-				light.position.set( 0, 200, 0 );
-				arScene.scene.add( light );
+		        particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				arScene.scene.add( particleLight );
+				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
-				light = new THREE.DirectionalLight( 0xffffff );
-				light.position.set( 0, 200, 100 );
-				light.castShadow = true;
-				light.shadow.camera.top = 180;
-				light.shadow.camera.bottom = -100;
-				light.shadow.camera.left = -120;
-				light.shadow.camera.right = 120;
-				arScene.scene.add( light );
+				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
+				directionalLight.position.x = Math.random() - 0.5;
+				directionalLight.position.y = Math.random() - 0.5;
+				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.normalize();
+				arScene.scene.add( directionalLight );
+
+				var pointLight = new THREE.PointLight( 0xffffff, 1 );
+				particleLight.add( pointLight );
 		}
-		var tick = function() {	
-        arScene.process();		
+		var tick = function() {		       
 		if ( mixers.length > 0 ) {
 
 					for ( var i = 0; i < mixers.length; i ++ ) {
@@ -124,7 +125,7 @@ let location_path = '../';
 						mixers[ i ].update( clock.getDelta() );
 					}
 				}
-			
+			arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};		
