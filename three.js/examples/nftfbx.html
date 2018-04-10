@@ -52,7 +52,12 @@ window.ARThreeOnLoad = function() {
 		}
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
-
+ var light = new THREE.PointLight(0xffffff);
+		light.position.set(400, 400, 400);
+		arScene.scene.add(light);
+		var light = new THREE.PointLight(0xff8800);
+		light.position.set(-400, -200, -300);
+		arScene.scene.add(light);
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
