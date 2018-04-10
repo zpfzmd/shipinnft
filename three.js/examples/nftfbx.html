@@ -1,26 +1,5 @@
 ﻿<html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-<style>
-html,body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	text-align: center;
-	overflow-x: hidden;
-}
-.portrait canvas {
-	transform-origin: 0 0;
-	transform: rotate(-90deg) translateX(-100%);
-}
-.desktop canvas {
- 	transform: scale(-1, 1);
-}
-#video{
-	margin: -299px 172px;
-    z-index: 978;
-    position: relative;
-}
-</style>
 <title>自然图片识别的例子</title>
 </head>
 <body>
@@ -126,23 +105,6 @@ var manager = new THREE.LoadingManager();
 			});
 		});
 		var init = function() {
-		renderer = new THREE.WebGLRenderer();
-				container = document.createElement( 'div' );
-				document.body.appendChild( container );
-
-				// grid
-				var gridHelper = new THREE.GridHelper( 14, 28, 0x303030, 0x303030 );
-				gridHelper.position.set( 0, - 0.04, 0 );
-				arScene.scene.add( gridHelper );
-
-				// stats
-				stats = new Stats();
-				container.appendChild( stats.dom );
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.setClearColor( 0x000000 );
-				container.appendChild( renderer.domElement );
-
 
 				animate();
 		}
@@ -160,7 +122,6 @@ var manager = new THREE.LoadingManager();
 
 				}
 
-				stats.update();
 
 				tick();
 
