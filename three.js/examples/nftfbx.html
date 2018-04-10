@@ -45,12 +45,7 @@ let location_path = '../';
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
         
-		var light = new THREE.PointLight(0xffffff);
-		light.position.set(0, 4, 4);
-		arScene.scene.add(light);
-		var light = new THREE.PointLight(0xff8800);
-		light.position.set(-4, -2, -3);
-		arScene.scene.add(light);
+
 		
 		
 		var rotationV = 0;
@@ -107,19 +102,18 @@ let location_path = '../';
 		});
 	    var clock = new THREE.Clock();
 		var init = function() {
-		        particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
-				arScene.scene.add( particleLight );
-				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
+		        light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+				light.position.set( 0, 200, 0 );
+				arScene.scene.add( light );
 
-				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
-				directionalLight.position.x = Math.random() - 0.5;
-				directionalLight.position.y = Math.random() - 0.5;
-				directionalLight.position.z = Math.random() - 0.5;
-				directionalLight.position.normalize();
-				arScene.scene.add( directionalLight );
-
-				var pointLight = new THREE.PointLight( 0xffffff, 1 );
-				particleLight.add( pointLight );
+				light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0, 200, 100 );
+				light.castShadow = true;
+				light.shadow.camera.top = 180;
+				light.shadow.camera.bottom = -100;
+				light.shadow.camera.left = -120;
+				light.shadow.camera.right = 120;
+				arScene.scene.add( light );
 		}
 		var tick = function() {		       
 		if ( mixers.length > 0 ) {
