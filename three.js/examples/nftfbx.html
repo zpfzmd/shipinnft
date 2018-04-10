@@ -108,9 +108,9 @@ let location_path = '../';
 				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
 				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0xeeeeee );
-				directionalLight.position.x = Math.random() - 0.5;
-				directionalLight.position.y = Math.random() - 0.5;
-				directionalLight.position.z = Math.random() - 0.5;
+				directionalLight.position.x = 0;
+				directionalLight.position.y = 0;
+				directionalLight.position.z = 0;
 				directionalLight.position.normalize();
 				arScene.scene.add( directionalLight );
 
