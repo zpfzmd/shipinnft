@@ -30,6 +30,7 @@ html,body {
 
 <script  src="vendor/three.js/build/three.js"></script>
 <script  src="vendor/three.js/FBXLoader.js"></script>
+<script  src="vendor/three.js/OrbitControls.js"></script>
 <script  src="vendor/three.js/inflate.min.js"></script>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.three.js"></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
@@ -83,37 +84,17 @@ window.ARThreeOnLoad = function() {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
+var manager = new THREE.LoadingManager();
+				manager.onProgress = function( item, loaded, total ) {
 
-		var sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(0.5, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-		sphere.material.shading = THREE.FlatShading;
-		sphere.position.z = 40;
-		sphere.position.x = 80;
-		sphere.position.y = 80;
-		sphere.scale.set(80,80,80);
- 
-        <!-- var light = new THREE.PointLight(0xffffff); -->
-		<!-- light.position.set(400, 400, 400); -->
-		<!-- arScene.scene.add(light); -->
-		<!-- var light = new THREE.PointLight(0xff8800); -->
-		<!-- light.position.set(-400, -200, -300); -->
-		<!-- arScene.scene.add(light); -->
-		
-		var torus = new THREE.Mesh(
-			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-		torus.material.shading = THREE.FlatShading;
-		torus.position.z = 0.5;
-		torus.rotation.x = Math.PI/2;
+					console.log( item, loaded, total );
 
+				};
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-	var loader = new THREE.FBXLoader( );
+	var loader = new THREE.FBXLoader(manager);
 
-			loader.load(location_path+ '../three.js/examples/models/fbx/jiqiren(2).FBX', function (collada) {
+			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man.fbx', function (collada) {
 				
 					collada.traverse( function( child ) {
 
@@ -125,45 +106,67 @@ window.ARThreeOnLoad = function() {
 
 						if ( child instanceof THREE.SkinnedMesh ) {
 
-							<!-- if ( child.geometry.animations !== undefined || child.geometry.morphAnimations !== undefined ) { -->
+							if ( child.geometry.animations !== undefined || child.geometry.morphAnimations !== undefined ) {
 
-								<!-- child.mixer = new THREE.AnimationMixer( child ); -->
-								<!-- mixers.push( child.mixer ); -->
-                                <!-- var action = child.mixer.clipAction( child.geometry.animations[ 0 ] ); -->
-								<!-- action.play(); -->
+								child.mixer = new THREE.AnimationMixer( child );
+								mixers.push( child.mixer );
+                                var action = child.mixer.clipAction( child.geometry.animations[ 0 ] );
+								action.play();
 								
 
-							<!-- } -->
+							}
 
 						}
 
 					} );
-				collada.scale.x = collada.scale.y = collada.scale.z =10;
 
-				//animate();
-				tick();
+                init();
 				markerRoot.add( collada );
 				arScene.scene.add(markerRoot);	
 			});
 		});
+		var init = function() {
+		renderer = new THREE.WebGLRenderer();
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.setClearColor( 0x000000 );
+				container.appendChild( renderer.domElement );
+
+				// controls, camera
+				controls = new THREE.OrbitControls( camera, renderer.domElement );
+				controls.target.set( 0, 12, 0 );
+				camera.position.set( 2, 18, 28 );
+				controls.update();
+
+				animate();
+		}
+		var  animate= function() {
+
+				requestAnimationFrame( animate );
+
+				if ( mixers.length > 0 ) {
+
+					for ( var i = 0; i < mixers.length; i ++ ) {
+
+						mixers[ i ].update( clock.getDelta() );
+
+					}
+
+				}
+
+				stats.update();
+
+				tick();
+
+			}
 	    var clock = new THREE.Clock();
 		var tick = function() {
 			arScene.process();
-
-				
+	
 			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
 			sphere.rotation.z += rotationV;
 			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
-			<!-- if ( mixers.length > 0 ) { -->
-
-					<!-- for ( var i = 0; i < mixers.length; i ++ ) { -->
-
-						<!-- mixers[ i ].update( clock.getDelta() ); -->
-
-					<!-- } -->
-
-				<!-- } -->
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
