@@ -13,14 +13,6 @@
 <script  src="vendor/three.js/inflate.min.js"></script>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.three.js"></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
-
-<script src="js/shaders/ConvolutionShader.js"></script>
-<script src="js/shaders/CopyShader.js"></script>
-<script src="js/postprocessing/EffectComposer.js"></script>
-<script src="js/postprocessing/RenderPass.js"></script>
-<script src="js/postprocessing/MaskPass.js"></script>
-<script src="js/postprocessing/BloomPass.js"></script>
-<script src="js/postprocessing/ShaderPass.js"></script>
 <script src="js/Detector.js"></script>
 
 
@@ -31,7 +23,7 @@
 let location_path = '../';
         bisplay = false,
         playingtime = Date.now();
-window.ARThreeOnLoad = function() {
+    window.ARThreeOnLoad = function() {
 
 	ARController.getUserMediaThreeScene({cameraParam: location_path+'../data/data/camera_para.dat', 
 	onSuccess: function(arScene, arController, arCamera) {
@@ -52,12 +44,15 @@ window.ARThreeOnLoad = function() {
 		}
 
 		document.body.insertBefore(renderer.domElement, document.body.firstChild);
- var light = new THREE.PointLight(0xffffff);
-		light.position.set(400, 400, 400);
+        
+		var light = new THREE.PointLight(0xffffff);
+		light.position.set(0, 4, 4);
 		arScene.scene.add(light);
 		var light = new THREE.PointLight(0xff8800);
-		light.position.set(-400, -200, -300);
+		light.position.set(-4, -2, -3);
 		arScene.scene.add(light);
+		
+		
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
@@ -68,7 +63,7 @@ window.ARThreeOnLoad = function() {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
-var manager = new THREE.LoadingManager();
+        var manager = new THREE.LoadingManager();
 				manager.onProgress = function( item, loaded, total ) {
 
 					console.log( item, loaded, total );
@@ -76,7 +71,7 @@ var manager = new THREE.LoadingManager();
 				};
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-	var loader = new THREE.FBXLoader(manager);
+	    var loader = new THREE.FBXLoader(manager);
 
 			loader.load(location_path+ '../three.js/examples/models/fbx/xsi_man_skinning.fbx', function (collada) {
 				
@@ -104,13 +99,14 @@ var manager = new THREE.LoadingManager();
 
 					} );
                 collada.scale.x = collada.scale.y = collada.scale.z =5;
+				init();
                 tick();
 				markerRoot.add( collada );
 				arScene.scene.add(markerRoot);	
 			});
 		});
 	    var clock = new THREE.Clock();
-		var tick = function() {
+		var init = function() {
 		        particleLight = new THREE.Mesh( new THREE.SphereGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
 				arScene.scene.add( particleLight );
 				arScene.scene.add( new THREE.AmbientLight( 0xcccccc ) );
@@ -124,22 +120,19 @@ var manager = new THREE.LoadingManager();
 
 				var pointLight = new THREE.PointLight( 0xffffff, 1 );
 				particleLight.add( pointLight );
+		}
+		var tick = function() {		       
 		if ( mixers.length > 0 ) {
 
 					for ( var i = 0; i < mixers.length; i ++ ) {
 
 						mixers[ i ].update( clock.getDelta() );
-
 					}
-
 				}
 			arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
-		};
-
-
-		
+		};		
 	}});
 
 	delete window.ARThreeOnLoad;
