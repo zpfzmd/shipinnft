@@ -99,20 +99,14 @@ var manager = new THREE.LoadingManager();
 
 					} );
 
-                init();
+                tick();
 				markerRoot.add( collada );
 				arScene.scene.add(markerRoot);	
 			});
 		});
-		var init = function() {
-
-				animate();
-		}
-		var  animate= function() {
-
-				requestAnimationFrame( animate );
-
-				if ( mixers.length > 0 ) {
+	    var clock = new THREE.Clock();
+		var tick = function() {
+		if ( mixers.length > 0 ) {
 
 					for ( var i = 0; i < mixers.length; i ++ ) {
 
@@ -121,13 +115,6 @@ var manager = new THREE.LoadingManager();
 					}
 
 				}
-
-
-				tick();
-
-			}
-	    var clock = new THREE.Clock();
-		var tick = function() {
 			arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
