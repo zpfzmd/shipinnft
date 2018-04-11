@@ -86,17 +86,18 @@ window.ARThreeOnLoad = function() {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
-                <!-- video = document.getElementById( 'video' ); -->
+                video = document.getElementById( 'video' );
 
-				<!-- texture = new THREE.VideoTexture( video ); -->
-				<!-- texture.minFilter = THREE.LinearFilter; -->
-				<!-- texture.magFilter = THREE.LinearFilter; -->
-				<!-- texture.format = THREE.RGBFormat; -->
-				
+				texture = new THREE.VideoTexture( video );
+				texture.minFilter = THREE.LinearFilter;
+				texture.magFilter = THREE.LinearFilter;
+				texture.format = THREE.RGBFormat;
+				var parameters = { color: 0xffffff, map: texture };
+
 
 		var sphere = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 8, 8),
-			new THREE.MeshNormalMaterial()
+			new THREE.MeshLambertMaterial( parameters )
 		);
 		sphere.material.shading = THREE.FlatShading;
 		sphere.position.z = 40;
