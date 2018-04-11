@@ -80,12 +80,62 @@ window.ARThreeOnLoad = function() {
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
-		let video = document.getElementById( 'video' );
 
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
+				
+
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
+			var markerRoot = arController.createThreeNFTMarker(markerId);
+			init();
+			tick();
+			markerRoot.add(ground);
+			arScene.scene.add(markerRoot);
+		});
+	    var clock = new THREE.Clock();
+
+	
+	
+	    var init= function() {
+
+				camera = new THREE.PerspectiveCamera(
+						36, window.innerWidth / window.innerHeight, 0.25, 16 );
+
+				camera.position.set( 0, 1.3, 3 );
+
+
+				// Lights
+
+				arScene.scene.add( new THREE.AmbientLight( 0x505050 ) );
+
+				var spotLight = new THREE.SpotLight( 0xffffff );
+				spotLight.angle = Math.PI / 5;
+				spotLight.penumbra = 0.2;
+				spotLight.position.set( 2, 3, 3 );
+				spotLight.castShadow = true;
+				spotLight.shadow.camera.near = 3;
+				spotLight.shadow.camera.far = 10;
+				spotLight.shadow.mapSize.width = 1024;
+				spotLight.shadow.mapSize.height = 1024;
+				arScene.scene.add( spotLight );
+
+				var dirLight = new THREE.DirectionalLight( 0x55505a, 1 );
+				dirLight.position.set( 0, 3, 0 );
+				dirLight.castShadow = true;
+				dirLight.shadow.camera.near = 1;
+				dirLight.shadow.camera.far = 10;
+
+				dirLight.shadow.camera.right = 1;
+				dirLight.shadow.camera.left = - 1;
+				dirLight.shadow.camera.top	= 1;
+				dirLight.shadow.camera.bottom = - 1;
+
+				dirLight.shadow.mapSize.width = 1024;
+				dirLight.shadow.mapSize.height = 1024;
+				arScene.scene.add( dirLight );
+
                 video = document.getElementById( 'video' );
 
 				texture = new THREE.VideoTexture( video );
@@ -94,38 +144,31 @@ window.ARThreeOnLoad = function() {
 				texture.format = THREE.RGBFormat;
 				
 				var parameters = { color: 0xffffff, map: texture };
-		var material,geometry;
-        material = new THREE.MeshLambertMaterial( parameters );
-        geometry = new THREE.BoxGeometry( 10, 10, 10 );
+				var ground = new THREE.Mesh(
+						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
+						new THREE.MeshLambertMaterial( parameters ) );
 
+				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
+				ground.scale.x=ground.scale.y=ground.scale.z=10
+				ground.receiveShadow = true;
+				arScene.scene.add( ground );
 
-			var ground = new THREE.Mesh(
-			new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
-			new THREE.MeshLambertMaterial( parameters ));
+				// Renderer
 
-			ground.rotation.x = - Math.PI / 2; 
-			ground.scale.x=ground.scale.y=ground.scale.z=5;
-			ground.receiveShadow = true;
-				
+				renderer = new THREE.WebGLRenderer();
+				renderer.shadowMap.enabled = true;
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+				startTime = Date.now();
 
-		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
-			var markerRoot = arController.createThreeNFTMarker(markerId);
-			init();
-			markerRoot.add(ground);
-			arScene.scene.add(markerRoot);
-		});
-	var clock = new THREE.Clock();
-	var init= function() {
-	           var light = new THREE.DirectionalLight( 0xffffff );
-				light.position.set( 0.5, 1, 1 ).normalize();
-				arScene.scene.add( light );
-	}
+			}
 		var tick = function() {
 			arScene.process();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
-		tick();
+		
 	}});
 
 	delete window.ARThreeOnLoad;
