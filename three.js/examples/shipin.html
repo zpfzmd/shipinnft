@@ -92,42 +92,34 @@ window.ARThreeOnLoad = function() {
 				texture.minFilter = THREE.LinearFilter;
 				texture.magFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
+				
 				var parameters = { color: 0xffffff, map: texture };
 		var material,geometry;
         material = new THREE.MeshLambertMaterial( parameters );
         geometry = new THREE.BoxGeometry( 10, 10, 10 );
-		//var sphere;
-		
-		//var sphere = new THREE.Mesh( geometry, material );
+
 
 			var ground = new THREE.Mesh(
-						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
-						new THREE.MeshPhongMaterial( {
-							color: 0xa0adaf, shininess: 150 } ) );
+			new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
+			new THREE.MeshLambertMaterial( parameters ));
 
-				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
-				ground.receiveShadow = true;
+			ground.rotation.x = - Math.PI / 2; 
+			ground.scale.x=ground.scale.y=ground.scale.z=5;
+			ground.receiveShadow = true;
 				
-				
-		<!-- sphere.position.z = 40; -->
-		<!-- sphere.position.x = 80; -->
-		<!-- sphere.position.y = 80; -->
-		<!-- sphere.scale.set(80,80,80); -->
-		
-		var torus = new THREE.Mesh(
-			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-		torus.material.shading = THREE.FlatShading;
-		torus.position.z = 0.5;
-		torus.rotation.x = Math.PI/2;
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
+			init();
 			markerRoot.add(ground);
 			arScene.scene.add(markerRoot);
 		});
 	var clock = new THREE.Clock();
+	var init= function() {
+	           var light = new THREE.DirectionalLight( 0xffffff );
+				light.position.set( 0.5, 1, 1 ).normalize();
+				arScene.scene.add( light );
+	}
 		var tick = function() {
 			arScene.process();
 			arScene.renderOn(renderer);
