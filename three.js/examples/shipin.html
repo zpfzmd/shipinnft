@@ -103,14 +103,28 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			arController.addEventListener('getNFTMarker', function (ev) {
-		       if(bisplay===false){
-		       		video.play();
-		       		video.style.display="inline";
-		       		bisplay=true;
-		       }
-		       playingtime=Date.now();
-	    });
+			video = document.getElementById( 'video' );
+
+				texture = new THREE.VideoTexture( video );
+				texture.minFilter = THREE.LinearFilter;
+				texture.magFilter = THREE.LinearFilter;
+				texture.format = THREE.RGBFormat;
+				var parameters = { color: 0xffffff, map: texture };
+					var ground = new THREE.Mesh(
+						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
+						new THREE.MeshLambertMaterial( parameters ) );
+
+				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
+				ground.receiveShadow = true;
+				arScene.scene.add( ground );
+			<!-- arController.addEventListener('getNFTMarker', function (ev) { -->
+		       <!-- if(bisplay===false){ -->
+		       		<!-- video.play(); -->
+		       		<!-- video.style.display="inline"; -->
+		       		<!-- bisplay=true; -->
+		       <!-- } -->
+		       <!-- playingtime=Date.now(); -->
+	    <!-- }); -->
 		});
 		
 		
