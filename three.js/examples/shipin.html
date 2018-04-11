@@ -141,15 +141,14 @@ window.ARThreeOnLoad = function() {
 				texture.minFilter = THREE.LinearFilter;
 				texture.magFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
-				
-				var parameters = { color: 0xffffff, map: texture };
-				var ground = new THREE.Mesh(
-						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
-						new THREE.MeshLambertMaterial( parameters ) );
-
-				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
+				var geometry = new THREE.PlaneGeometry( 10, 10 );
+				//var parameters = { color: 0xffffff, map: texture };
+				var material =  new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture} );
+				<!-- var ground = new THREE.Mesh( -->
+						<!-- new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ), -->
+						<!-- new THREE.MeshLambertMaterial( parameters ) ); -->
+                var plane = new THREE.Mesh( geometry, material ); // rotates 
 				ground.scale.x=ground.scale.y=ground.scale.z=10
-				ground.receiveShadow = true;
 				arScene.scene.add( ground );
 
 				// Renderer
