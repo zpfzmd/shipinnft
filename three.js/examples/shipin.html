@@ -80,7 +80,7 @@ window.ARThreeOnLoad = function() {
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
-
+        var ground;
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
@@ -89,6 +89,7 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
+			arScene.scene.add( ground );
 			init();
 			tick();
 			arScene.scene.add(markerRoot);
@@ -113,26 +114,10 @@ window.ARThreeOnLoad = function() {
 				spotLight.angle = Math.PI / 5;
 				spotLight.penumbra = 0.2;
 				spotLight.position.set( 2, 3, 3 );
-				spotLight.castShadow = true;
-				spotLight.shadow.camera.near = 3;
-				spotLight.shadow.camera.far = 10;
-				spotLight.shadow.mapSize.width = 1024;
-				spotLight.shadow.mapSize.height = 1024;
 				arScene.scene.add( spotLight );
 
 				var dirLight = new THREE.DirectionalLight( 0x55505a, 1 );
 				dirLight.position.set( 0, 3, 0 );
-				dirLight.castShadow = true;
-				dirLight.shadow.camera.near = 1;
-				dirLight.shadow.camera.far = 10;
-
-				dirLight.shadow.camera.right = 1;
-				dirLight.shadow.camera.left = - 1;
-				dirLight.shadow.camera.top	= 1;
-				dirLight.shadow.camera.bottom = - 1;
-
-				dirLight.shadow.mapSize.width = 1024;
-				dirLight.shadow.mapSize.height = 1024;
 				arScene.scene.add( dirLight );
 
                 var video = document.getElementById( 'video' );
@@ -149,7 +134,7 @@ window.ARThreeOnLoad = function() {
 						<!-- new THREE.MeshLambertMaterial( parameters ) ); -->
                 var ground = new THREE.Mesh( geometry, material ); // rotates 
 				ground.scale.x=ground.scale.y=ground.scale.z=10
-				arScene.scene.add( ground );
+				
 
 				// Rendere
 
