@@ -96,9 +96,19 @@ window.ARThreeOnLoad = function() {
 		var material,geometry;
         material = new THREE.MeshLambertMaterial( parameters );
         geometry = new THREE.BoxGeometry( 10, 10, 10 );
-		var sphere = new THREE.Mesh( geometry, material );
-
 		
+		
+		//var sphere = new THREE.Mesh( geometry, material );
+
+			var ground = new THREE.Mesh(
+						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
+						new THREE.MeshPhongMaterial( {
+							color: 0xa0adaf, shininess: 150 } ) );
+
+				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
+				ground.receiveShadow = true;
+				
+				
 		sphere.position.z = 40;
 		sphere.position.x = 80;
 		sphere.position.y = 80;
@@ -114,7 +124,7 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			markerRoot.add(sphere);
+			markerRoot.add(ground);
 			arScene.scene.add(markerRoot);
 		});
 	var clock = new THREE.Clock();
