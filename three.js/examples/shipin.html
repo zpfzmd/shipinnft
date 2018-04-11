@@ -110,8 +110,10 @@ window.ARThreeOnLoad = function() {
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			markerRoot.add( cube );
-			cube.position.set(0,0,0);
-			cube.scale.x=cube.scale.y=cube.scale.z=10;
+			cube.position.z = 40;
+		    cube.position.x = 80;
+		    cube.position.y = 80;
+		    cube.scale.set(10,10,10);
 			init();
 			tick();
 			arScene.scene.add(markerRoot);
