@@ -80,7 +80,7 @@ window.ARThreeOnLoad = function() {
 		var rotationV = 0;
 		var rotationTarget = 0;
 		var onRenderFcts= [];
-        var ground;
+        var cube;
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
@@ -89,7 +89,7 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			markerRoot.add( ground );
+			markerRoot.add( cube );
 			init();
 			tick();
 			arScene.scene.add(markerRoot);
@@ -126,14 +126,22 @@ window.ARThreeOnLoad = function() {
 				texture.minFilter = THREE.LinearFilter;
 				texture.magFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
-				var geometry = new THREE.SphereGeometry(0.5, 8, 8),
-				//var parameters = { color: 0xffffff, map: texture };
-				var material =  new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture} );
-				<!-- var ground = new THREE.Mesh( -->
-						<!-- new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ), -->
-						<!-- new THREE.MeshLambertMaterial( parameters ) ); -->
-                var ground = new THREE.Mesh( geometry, material ); // rotates 
-				ground.scale.x=ground.scale.y=ground.scale.z=10
+			
+			
+var cubeGeometry = new THREE.BoxGeometry(1, 10, 20);
+var cubeMaterial = new THREE.MeshBasicMaterial({map: texture});
+ 
+var materials = [];
+materials.push(cubeMaterial);
+materials.push(cubeMaterial);
+for (var i = 1; i < 5; i++) {
+    materials.push(new THREE.MeshLambertMaterial({color: 0xff0000}));
+}
+//MeshFaceMaterial这是一种容器，可以在该容器中为物体的各个表面上设置不同的颜色
+var cube = new THREE.Mesh(cubeGeometry, new THREE.MeshFaceMaterial(materials));
+cube.position.set(-10.05,0,0);
+cube.rotation.x = -0.3;
+cube.rotation.y = 23.5;
 				
 
 				// Rendere
