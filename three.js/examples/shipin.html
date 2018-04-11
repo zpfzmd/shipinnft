@@ -111,8 +111,9 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			markerRoot.add( cube );
 			cube.position.z = 40;
-		    cube.position.x = 10;
-		    cube.position.y = 10;
+		    cube.position.x = 100;
+		    cube.position.y = 100;
+			cube.rotation.x = -80;
 		    cube.scale.set(10,10,10);
 			init();
 			tick();
