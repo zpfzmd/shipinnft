@@ -103,14 +103,16 @@ window.ARThreeOnLoad = function() {
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
 
-		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
-			var markerRoot = arController.createThreeNFTMarker(markerId);
-			video = document.getElementById( 'video' );
+		video = document.getElementById( 'video' );
 
 				texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;
 				texture.magFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
+		
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
+			var markerRoot = arController.createThreeNFTMarker(markerId);
+			
 				var parameters = { color: 0xffffff, map: texture };
 					var ground = new THREE.Mesh(
 						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
@@ -131,13 +133,13 @@ window.ARThreeOnLoad = function() {
 		
 		
 		
-		setInterval(function(){
-	    	if(Date.now()-playingtime>1200){
-	    		video.pause();
-	    		video.style.display="none";
-	    		bisplay=false;	
-	    	}
-	    },1000);
+		<!-- setInterval(function(){ -->
+	    	<!-- if(Date.now()-playingtime>1200){ -->
+	    		<!-- video.pause(); -->
+	    		<!-- video.style.display="none"; -->
+	    		<!-- bisplay=false;	 -->
+	    	<!-- } -->
+	    <!-- },1000); -->
 		var tick = function() {
 			arScene.process();
 
