@@ -96,7 +96,7 @@ window.ARThreeOnLoad = function() {
 		var material,geometry;
         material = new THREE.MeshLambertMaterial( parameters );
         geometry = new THREE.BoxGeometry( 10, 10, 10 );
-		var sphere;
+		//var sphere;
 		
 		//var sphere = new THREE.Mesh( geometry, material );
 
@@ -109,10 +109,10 @@ window.ARThreeOnLoad = function() {
 				ground.receiveShadow = true;
 				
 				
-		sphere.position.z = 40;
-		sphere.position.x = 80;
-		sphere.position.y = 80;
-		sphere.scale.set(80,80,80);
+		<!-- sphere.position.z = 40; -->
+		<!-- sphere.position.x = 80; -->
+		<!-- sphere.position.y = 80; -->
+		<!-- sphere.scale.set(80,80,80); -->
 		
 		var torus = new THREE.Mesh(
 			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
