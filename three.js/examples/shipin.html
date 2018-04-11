@@ -86,7 +86,6 @@ window.ARThreeOnLoad = function() {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
-		
                 video = document.getElementById( 'video' );
 
 				texture = new THREE.VideoTexture( video );
@@ -94,12 +93,10 @@ window.ARThreeOnLoad = function() {
 				texture.magFilter = THREE.LinearFilter;
 				texture.format = THREE.RGBFormat;
 				
-				
-				var parameters = { color: 0xffffff, map: texture };
+
 		var sphere = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 8, 8),
-			new THREE.MeshLambertMaterial( parameters )
-			
+			new THREE.MeshNormalMaterial()
 		);
 		sphere.material.shading = THREE.FlatShading;
 		sphere.position.z = 40;
