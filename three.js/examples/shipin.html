@@ -29,11 +29,13 @@ html,body {
 <!--  <script src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.api.js"></script>  -->
 
 <script  src="vendor/three.js/build/three.js"></script>
+<script  src="vendor/three.js/Animation.js"></script>
+<script  src="vendor/three.js/KeyFrameAnimation.js"></script>
+<script  src="vendor/three.js/AnimationHandler.js"></script>
+<script  src="vendor/three.js/ColladaLoader.js"></script>
 <script  src="worker_artoolkit2/vendor/jsartoolkit5/js/artoolkit.three.js"></script>
 <script src="vendor/three.js/examples/js/libs/stats.min.js"></script>
-		<script src="js/libs/dat.gui.min.js"></script>
-			<script src="js/shaders/ConvolutionShader.js"></script>
-		<script src="js/shaders/CopyShader.js"></script>
+
 <script src="js/shaders/ConvolutionShader.js"></script>
 <script src="js/shaders/CopyShader.js"></script>
 <script src="js/postprocessing/EffectComposer.js"></script>
@@ -84,17 +86,27 @@ window.ARThreeOnLoad = function() {
 			ev.preventDefault();
 			rotationTarget += 1;
 		}, false);
+		
+                video = document.getElementById( 'video' );
 
+				texture = new THREE.VideoTexture( video );
+				texture.minFilter = THREE.LinearFilter;
+				texture.magFilter = THREE.LinearFilter;
+				texture.format = THREE.RGBFormat;
+				
+				
+				var parameters = { color: 0xffffff, map: texture };
 		var sphere = new THREE.Mesh(
 			new THREE.SphereGeometry(0.5, 8, 8),
-			new THREE.MeshNormalMaterial()
+			new THREE.MeshLambertMaterial( parameters );
+			
 		);
 		sphere.material.shading = THREE.FlatShading;
 		sphere.position.z = 40;
 		sphere.position.x = 80;
 		sphere.position.y = 80;
 		sphere.scale.set(80,80,80);
-
+		
 		var torus = new THREE.Mesh(
 			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
 			new THREE.MeshNormalMaterial()
@@ -103,57 +115,18 @@ window.ARThreeOnLoad = function() {
 		torus.position.z = 0.5;
 		torus.rotation.x = Math.PI/2;
 
-		video = document.getElementById( 'video' );
-
-				texture = new THREE.VideoTexture( video );
-				texture.minFilter = THREE.LinearFilter;
-				texture.magFilter = THREE.LinearFilter;
-				texture.format = THREE.RGBFormat;
-		
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			
-				var material = new THREE.MeshPhongMaterial( {
-						color: 0x80ee10,
-						shininess: 100,
-						side: THREE.DoubleSide,
-
-						// ***** Clipping setup (material): *****
-						clippingPlanes: [ localPlane ],
-						clipShadows: true
-
-					} ),
-
-					geometry = new THREE.TorusKnotGeometry( 0.4, 0.08, 95, 20 );
-
-				object = new THREE.Mesh( geometry, material );
-				object.castShadow = true;
-				arScene.scene.add( object );
+			markerRoot.add(sphere);
+			arScene.scene.add(markerRoot);
 		});
-		
-		
-		
-		<!-- setInterval(function(){ -->
-	    	<!-- if(Date.now()-playingtime>1200){ -->
-	    		<!-- video.pause(); -->
-	    		<!-- video.style.display="none"; -->
-	    		<!-- bisplay=false;	 -->
-	    	<!-- } -->
-	    <!-- },1000); -->
+	var clock = new THREE.Clock();
 		var tick = function() {
 			arScene.process();
-
-			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
-			sphere.rotation.z += rotationV;
-			torus.rotation.y += rotationV;
-			rotationV *= 0.8;
-
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
-
-		tick();
-
+		
 	}});
 
 	delete window.ARThreeOnLoad;
