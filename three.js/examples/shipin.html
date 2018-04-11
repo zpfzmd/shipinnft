@@ -113,22 +113,22 @@ window.ARThreeOnLoad = function() {
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			
-				var parameters = { color: 0xffffff, map: texture };
-					var ground = new THREE.Mesh(
-						new THREE.PlaneBufferGeometry( 9, 9, 1, 1 ),
-						new THREE.MeshLambertMaterial( parameters ) );
+				var material = new THREE.MeshPhongMaterial( {
+						color: 0x80ee10,
+						shininess: 100,
+						side: THREE.DoubleSide,
 
-				ground.rotation.x = - Math.PI / 2; // rotates X/Y to X/Z
-				ground.receiveShadow = true;
-				arScene.scene.add( ground );
-			<!-- arController.addEventListener('getNFTMarker', function (ev) { -->
-		       <!-- if(bisplay===false){ -->
-		       		<!-- video.play(); -->
-		       		<!-- video.style.display="inline"; -->
-		       		<!-- bisplay=true; -->
-		       <!-- } -->
-		       <!-- playingtime=Date.now(); -->
-	    <!-- }); -->
+						// ***** Clipping setup (material): *****
+						clippingPlanes: [ localPlane ],
+						clipShadows: true
+
+					} ),
+
+					geometry = new THREE.TorusKnotGeometry( 0.4, 0.08, 95, 20 );
+
+				object = new THREE.Mesh( geometry, material );
+				object.castShadow = true;
+				arScene.scene.add( object );
 		});
 		
 		
