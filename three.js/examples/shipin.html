@@ -148,7 +148,7 @@ window.ARThreeOnLoad = function() {
 		var tick = function() {
 			arScene.process();
 			rotationV += (rotationTarget) * 0.05;
-			
+			console.log( movie.rotation.y);
 			movie.rotation.y -= rotationV;
 			rotationV *= 0.8;
 			arScene.renderOn(renderer);
