@@ -108,7 +108,7 @@ window.ARThreeOnLoad = function() {
 			
 			
                 var cubeGeometry = new THREE.BoxGeometry(2, 5, 5);
-                var cubeMaterial = new THREE.MeshBasicMaterial({map: texture});
+                var cubeMaterial = new THREE.MeshBasicMaterial({map: texture,overdraw:true,side:THREE.DoubleSide});
  
                var materials = [];
                materials.push(cubeMaterial);
