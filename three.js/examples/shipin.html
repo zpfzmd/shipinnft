@@ -127,9 +127,14 @@ window.ARThreeOnLoad = function() {
 	
 	
 	    var init= function() {
+                camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+                orbit = new THREE.OrbitControls(camera);
 				arScene.scene.add( new THREE.AmbientLight( 0x505050 ) );
-
+                camera.position.x = 0;
+                camera.position.y = 12;
+                camera.position.z = 30;
+                camera.lookAt(arScene.scene.position);
 				var spotLight = new THREE.SpotLight( 0xffffff );
 				spotLight.angle = Math.PI / 5;
 				spotLight.penumbra = 0.2;
