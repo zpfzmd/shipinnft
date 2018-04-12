@@ -163,7 +163,7 @@ window.ARThreeOnLoad = function() {
 			arScene.process();
 			rotationV += (rotationTarget) * 0.05;
 			
-			cube.rotation.y += rotationV;
+			cube.rotation.y -= rotationV;
 			rotationV *= 0.8;
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
