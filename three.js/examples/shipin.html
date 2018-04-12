@@ -88,15 +88,13 @@ window.ARThreeOnLoad = function() {
 			rotationTarget += 1;
 		}, false);
 		        
-			var sphere = new THREE.Mesh(
-			new THREE.SphereGeometry(0.5, 8, 8),
+			var torus = new THREE.Mesh(
+			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
 			new THREE.MeshNormalMaterial()
 		);
-		sphere.material.shading = THREE.FlatShading;
-		sphere.position.z = 40;
-		sphere.position.x = 80;
-		sphere.position.y = 80;
-		sphere.scale.set(80,80,80);
+		torus.material.shading = THREE.FlatShading;
+		torus.position.z = 0.5;
+		torus.rotation.x = Math.PI/2;
 				
 				
 				
@@ -123,7 +121,7 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			markerRoot.add(sphere);
+			markerRoot.add(torus);
 			//markerRoot.add( cube );
 			cube.position.z = 40;
 		    cube.position.x = 100;
@@ -163,8 +161,9 @@ window.ARThreeOnLoad = function() {
 			}
 		var tick = function() {
 			arScene.process();
-			rotationV += (rotationTarget - sphere.rotation.z) * 0.05;
-			sphere.rotation.z += rotationV;
+			rotationV += (rotationTarget) * 0.05;
+			
+			torus.rotation.y += rotationV;
 			rotationV *= 0.8;
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
