@@ -91,7 +91,7 @@ window.ARThreeOnLoad = function() {
 		
                 var video = document.getElementById( 'video' );
 
-				var videotexture = new THREE.Texture( video );
+				var videotexture = new THREE.VideoTexture( video );
 				videotexture.minFilter = THREE.LinearFilter;
 				videotexture.magFilter = THREE.LinearFilter;
 				videotexture.format = THREE.RGBFormat;
