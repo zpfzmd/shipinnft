@@ -88,50 +88,34 @@ window.ARThreeOnLoad = function() {
 			rotationTarget += 1;
 		}, false);
 		        
-			var torus = new THREE.Mesh(
-			new THREE.TorusGeometry(0.3, 0.2, 8, 8),
-			new THREE.MeshNormalMaterial()
-		);
-		torus.material.shading = THREE.FlatShading;
-		torus.position.z = 40;
-		torus.position.x = 80;
-		torus.position.y = 80;
-		torus.scale.set(80,80,80);		
-				
-				
+		
                 var video = document.getElementById( 'video' );
 
-				var texture = new THREE.VideoTexture( video );
-				texture.minFilter = THREE.LinearFilter;
-				texture.magFilter = THREE.LinearFilter;
-				texture.format = THREE.RGBFormat;
+				var videotexture = new THREE.Texture( video );
+				videotexture.minFilter = THREE.LinearFilter;
+				videotexture.magFilter = THREE.LinearFilter;
+				videotexture.format = THREE.RGBFormat;
 			
 			
-                var cubeGeometry = new THREE.BoxGeometry(2, 5, 5);
-                var cubeMaterial = new THREE.MeshBasicMaterial({map: texture,overdraw:true,side:THREE.DoubleSide});
+                var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
+                var movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
  
-               var materials = [];
-               materials.push(cubeMaterial);
-               materials.push(cubeMaterial);
-              for (var i = 1; i < 5; i++) {
-                materials.push(new THREE.MeshLambertMaterial({color: 0xff0000}));
-              }
-//MeshFaceMaterial这是一种容器，可以在该容器中为物体的各个表面上设置不同的颜色
-          var cube = new THREE.Mesh(cubeGeometry, new THREE.MeshFaceMaterial(materials));
+              
+          var movie = new THREE.Mesh(movieGeometry,movieMaterial);
 	
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-			markerRoot.add(cube);
+			markerRoot.add(movie);
 			//markerRoot.add( cube );
-			cube.position.z = 40;
-		    cube.position.x = 100;
-		    cube.position.y = 100;
+			movie.position.z = 40;
+		    movie.position.x = 100;
+		    movie.position.y = 100;
 			<!-- cube.rotation.y = 90; -->
 			<!-- cube.rotation.z = 90; -->
 			<!-- cube.rotation.x = 90; -->
 
-		    cube.scale.set(20,20,20);
+		    movie.scale.set(20,20,20);
 			init();
 			tick();
 			arScene.scene.add(markerRoot);
@@ -163,7 +147,7 @@ window.ARThreeOnLoad = function() {
 			arScene.process();
 			rotationV += (rotationTarget) * 0.05;
 			
-			cube.rotation.y -= rotationV;
+			movie.rotation.y -= rotationV;
 			rotationV *= 0.8;
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
