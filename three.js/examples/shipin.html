@@ -86,6 +86,7 @@ window.ARThreeOnLoad = function() {
 		renderer.domElement.addEventListener('click', function(ev) {
 			ev.preventDefault();
 			rotationTarget += 1;
+			
 		}, false);
 		        
 		
@@ -119,6 +120,7 @@ window.ARThreeOnLoad = function() {
 			init();
 			tick();
 			arScene.scene.add(markerRoot);
+			console.log( movie.rotation.y);
 		});
 	    var clock = new THREE.Clock();
 
