@@ -94,7 +94,7 @@ window.ARThreeOnLoad = function() {
 				texture.format = THREE.RGBFormat;
 			
 			
-                var cubeGeometry = new THREE.BoxGeometry(0.001, 10, 20);
+                var cubeGeometry = new THREE.BoxGeometry(0.001, 5, 5);
                 var cubeMaterial = new THREE.MeshBasicMaterial({map: texture});
  
                var materials = [];
@@ -110,10 +110,10 @@ window.ARThreeOnLoad = function() {
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			markerRoot.add( cube );
-			cube.position.z = 40;
-		    cube.position.x = 100;
-		    cube.position.y = 100;
-			cube.rotation.y = -90;
+			<!-- cube.position.z = 40; -->
+		    <!-- cube.position.x = 100; -->
+		    <!-- cube.position.y = 100; -->
+			<!-- cube.rotation.y = -90; -->
 
 		    cube.scale.set(10,10,10);
 			init();
