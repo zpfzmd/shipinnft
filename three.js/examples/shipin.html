@@ -123,7 +123,7 @@ window.ARThreeOnLoad = function() {
 			playingtime=Date.now();
 		});
 		setInterval(function(){
-	    	if(Date.now()-playingtime>1200){
+	    	if(Date.now()-playingtime>500){
 	    		video.pause();
 	    		bisplay=false;	
 	    	}
