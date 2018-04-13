@@ -109,8 +109,6 @@ window.ARThreeOnLoad = function() {
  
               
             var movie = new THREE.Mesh(movieGeometry,movieMaterial);
-		    });
-			
 			markerRoot.add(movie);
 		    movie.position.x = 100;
 		    movie.position.y = 100;
@@ -121,6 +119,9 @@ window.ARThreeOnLoad = function() {
 			tick();
 			arScene.scene.add(markerRoot);
 			console.log( movie.rotation.y);
+		    });
+			
+			
 		});
 		
 	    var clock = new THREE.Clock();
