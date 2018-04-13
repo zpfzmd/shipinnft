@@ -90,23 +90,24 @@ window.ARThreeOnLoad = function() {
 		}, false);
 		        
 		
-                var video = document.getElementById( 'video' );
+             
+	
 
-				var videotexture = new THREE.VideoTexture( video );
+		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
+			var markerRoot = arController.createThreeNFTMarker(markerId);
+			var video = document.getElementById( 'video' );
+
+		        var videotexture = new THREE.VideoTexture( video );
 				videotexture.minFilter = THREE.LinearFilter;
 				videotexture.magFilter = THREE.LinearFilter;
 				videotexture.format = THREE.RGBFormat;
 			
 			
-                var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
-                var movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
+            var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
+            var movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
  
               
-          var movie = new THREE.Mesh(movieGeometry,movieMaterial);
-	
-
-		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
-			var markerRoot = arController.createThreeNFTMarker(markerId);
+            var movie = new THREE.Mesh(movieGeometry,movieMaterial);
 			markerRoot.add(movie);
 			//markerRoot.add( cube );
 			//movie.position.z = 40;
