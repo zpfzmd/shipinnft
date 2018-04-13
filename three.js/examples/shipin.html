@@ -45,7 +45,7 @@ html,body {
 <script src="js/postprocessing/ShaderPass.js"></script>
 <script src="js/Detector.js"></script>
 
-<video id="video" autoplay webkit-playsinline loop style="display: none;">
+<video id="video" webkit-playsinline loop style="display: none;">
 	<source src="js/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 
@@ -95,19 +95,11 @@ window.ARThreeOnLoad = function() {
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
-
-		});
-		arController.addEventListener('getNFTMarker', function (ev) {
-			var video = document.getElementById( 'video' );
-
-		    var videotexture = new THREE.VideoTexture( video );
-		    videotexture.minFilter = THREE.LinearFilter;
-			videotexture.magFilter = THREE.LinearFilter;
-			videotexture.format = THREE.RGBFormat;
+			
 			
 			
             var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
-            var movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
+            var movieMaterial = new THREE.MeshBasicMaterial({color:0xeeefff});
  
               
             var movie = new THREE.Mesh(movieGeometry,movieMaterial);
@@ -121,6 +113,16 @@ window.ARThreeOnLoad = function() {
 			tick();
 			arScene.scene.add(markerRoot);
 			console.log( movie.rotation.y);
+		});
+		arController.addEventListener('getNFTMarker', function (ev) {
+		    var video = document.getElementById( 'video' );
+            video.play();
+		    var videotexture = new THREE.VideoTexture( video );
+		    videotexture.minFilter = THREE.LinearFilter;
+			videotexture.magFilter = THREE.LinearFilter;
+			videotexture.format = THREE.RGBFormat;
+            movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide}); 
+            movie = new THREE.Mesh(movieGeometry,movieMaterial);
 		});
 	    var clock = new THREE.Clock();
 
@@ -147,6 +149,8 @@ window.ARThreeOnLoad = function() {
 			}
 		var tick = function() {
 			arScene.process();
+			movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide}); 
+            movie = new THREE.Mesh(movieGeometry,movieMaterial);
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
