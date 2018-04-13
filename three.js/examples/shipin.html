@@ -45,7 +45,7 @@ html,body {
 <script src="js/postprocessing/ShaderPass.js"></script>
 <script src="js/Detector.js"></script>
 
-<video id="video"  webkit-playsinline loop style="display: none;">
+<video id="video" autoplay webkit-playsinline loop style="display: none;">
 	<source src="js/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 </video>
 
@@ -90,11 +90,26 @@ window.ARThreeOnLoad = function() {
 		}, false);
 		        
 		
-         var video, videotexture , movieGeometry, movieMaterial, movie;
+             
 	
 
 		arController.loadNFTMarker(location_path+'../data/dataNFT/mc/pinball', function(markerId) {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
+			arController.addEventListener('getNFTMarker', function (ev) {
+		    var video = document.getElementById( 'video' );
+
+		    var videotexture = new THREE.VideoTexture( video );
+		    videotexture.minFilter = THREE.LinearFilter;
+			videotexture.magFilter = THREE.LinearFilter;
+			videotexture.format = THREE.RGBFormat;
+			
+			
+            var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
+            var movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
+ 
+              
+            var movie = new THREE.Mesh(movieGeometry,movieMaterial);
+		    });
 			
 			markerRoot.add(movie);
 		    movie.position.x = 100;
@@ -107,21 +122,7 @@ window.ARThreeOnLoad = function() {
 			arScene.scene.add(markerRoot);
 			console.log( movie.rotation.y);
 		});
-		arController.addEventListener('getNFTMarker', function (ev) {
-		    video = document.getElementById( 'video' );
-
-		    videotexture = new THREE.VideoTexture( video );
-		    videotexture.minFilter = THREE.LinearFilter;
-			videotexture.magFilter = THREE.LinearFilter;
-			videotexture.format = THREE.RGBFormat;
-			
-			
-            movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
-            movieMaterial = new THREE.MeshBasicMaterial({map: videotexture,overdraw:true,side:THREE.DoubleSide});
- 
-              
-            movie = new THREE.Mesh(movieGeometry,movieMaterial);
-		});
+		
 	    var clock = new THREE.Clock();
 
 	
