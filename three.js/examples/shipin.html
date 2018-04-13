@@ -116,8 +116,18 @@ window.ARThreeOnLoad = function() {
 			console.log( movie.rotation.y);
 		});
 		arController.addEventListener('getNFTMarker', function (ev) {
-		    video.play();
+		    if(bisplay===false){
+			  video.play();
+			  bisplay=true;
+			}
+			playingtime=Date.now();
 		});
+		setInterval(function(){
+	    	if(Date.now()-playingtime>1200){
+	    		video.pause();
+	    		bisplay=false;	
+	    	}
+	    },1000);
 	    var clock = new THREE.Clock();
 
 	
@@ -135,15 +145,9 @@ window.ARThreeOnLoad = function() {
 				var dirLight = new THREE.DirectionalLight( 0x55505a, 1 );
 				dirLight.position.set( 0, 3, 0 );
 				arScene.scene.add( dirLight );
-
-				
-
-				// Rendere
-
 			}
 		var tick = function() {
 			arScene.process();
-			//video.play();
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
