@@ -1260,12 +1260,12 @@
 
 		if ( false) {
 		// if ( navigator.mediaDevices || window.MediaStreamTrack) {
-			if (navigator.mediaDevices) {
-				navigator.mediaDevices.getUserMedia({
-					audio: true,
-					video: mediaDevicesConstraints
-				}).then(success, onError); 
-			} else {
+			// if (navigator.mediaDevices) {
+				// navigator.mediaDevices.getUserMedia({
+					// audio: true,
+					// video: mediaDevicesConstraints
+				// }).then(success, onError); 
+			//} else {
 				MediaStreamTrack.getSources(function(sources) {
 					var facingDir = mediaDevicesConstraints.facingMode;
 					if (facing && facing.exact) {
@@ -1287,7 +1287,7 @@
 						}
 					}
 				});
-			}
+			//}
 		} else {
 			if (navigator.getUserMedia) {
 				navigator.getUserMedia(hdConstraints, success, onError);
