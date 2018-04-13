@@ -97,10 +97,10 @@ window.ARThreeOnLoad = function() {
 			var markerRoot = arController.createThreeNFTMarker(markerId);
 			var video = document.getElementById( 'video' );
 
-		        var videotexture = new THREE.VideoTexture( video );
-				videotexture.minFilter = THREE.LinearFilter;
-				videotexture.magFilter = THREE.LinearFilter;
-				videotexture.format = THREE.RGBFormat;
+		    var videotexture = new THREE.VideoTexture( video );
+		    videotexture.minFilter = THREE.LinearFilter;
+			videotexture.magFilter = THREE.LinearFilter;
+			videotexture.format = THREE.RGBFormat;
 			
 			
             var movieGeometry = new THREE.PlaneGeometry(240,100,4,4);
@@ -109,13 +109,8 @@ window.ARThreeOnLoad = function() {
               
             var movie = new THREE.Mesh(movieGeometry,movieMaterial);
 			markerRoot.add(movie);
-			//markerRoot.add( cube );
-			//movie.position.z = 40;
 		    movie.position.x = 100;
 		    movie.position.y = 100;
-			<!-- cube.rotation.y = 90; -->
-			<!-- cube.rotation.z = 90; -->
-			<!-- cube.rotation.x = 90; -->
             movie.rotation.y = -3.141592;
 			movie.rotation.z=3.141592/2;
 		  
@@ -149,10 +144,6 @@ window.ARThreeOnLoad = function() {
 			}
 		var tick = function() {
 			arScene.process();
-			rotationV += (rotationTarget) * 0.05;
-			console.log( movie.rotation.y);
-			movie.rotation.y -= rotationV;
-			rotationV *= 0.8;
 			arScene.renderOn(renderer);
 			requestAnimationFrame(tick);
 		};
